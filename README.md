@@ -39,8 +39,8 @@ To run this application, you'll need the following:
 ### Step 1: Clone the Repository
 Clone the repository to your local machine:
 ```bash
-git clone https://github.com/username/repo-name.git
-cd repo-name
+git clone git@github.com:Abhaii11/loging_singup.git
+cd loging_singup
 ```
 
 ### Step 2: Set Up a Virtual Environment
