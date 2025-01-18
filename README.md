@@ -152,5 +152,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For questions or suggestions, please reach out to me:
 
-- **Email**: your-email@example.com
-- **GitHub**: [your-github-username](https://github.com/your-github-username)
+- **Email**: rautabhay66.com
+- **GitHub**: [Abhii11](https://github.com/your-github-username)
