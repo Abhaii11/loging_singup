@@ -3,16 +3,97 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
 import sqlite3
+import pymysql
+
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Set a secret key for sessions
-
+app.secret_key = 'your_secret_key'
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Directory to store profile pictures
 UPLOAD_FOLDER = 'static/profile_pictures'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Database setup
 DATABASE = 'users.db'
+
+# MySQL connection
+db = pymysql.connect(
+    host="localhost",
+    user="root",
+    password="Root@Bhi89",
+    database="blog_app",
+    cursorclass=pymysql.cursors.DictCursor
+)
+
+# Route: Doctor - Create Blog Post
+@app.route('/doctor/blog/create', methods=['GET', 'POST'])
+def create_blog():
+    if session.get('user_type') != 'Doctor':
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        title = request.form['title']
+        category = request.form['category']
+        summary = request.form['summary']
+        content = request.form['content']
+        is_draft = request.form.get('is_draft') == 'on'
+
+        # Handle Image Upload
+        image = None
+        if 'image' in request.files:
+            file = request.files['image']
+            if file and file.filename:
+                image = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], image))
+
+        # Save to Database
+        with db.cursor() as cursor:
+            query = """
+                INSERT INTO blogs (title, image, category, summary, content, is_draft, author_id)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(query, (title, image, category, summary, content, is_draft, session['user_id']))
+            db.commit()
+
+        flash('Blog post created successfully!', 'success')
+        return redirect(url_for('view_doctor_blogs'))
+
+    return render_template('create_blog.html')
+
+# Route: Doctor - View All Blog Posts
+@app.route('/doctor/blogs')
+def view_doctor_blogs():
+    if session.get('user_type') != 'Doctor':
+        return redirect(url_for('login'))
+
+    with db.cursor() as cursor:
+        query = "SELECT * FROM blogs WHERE author_id = %s"
+        cursor.execute(query, (session['user_id'],))
+        blogs = cursor.fetchall()
+
+    return render_template('doctor_blogs.html', blogs=blogs)
+
+# Route: Patient - View Blogs by Category
+@app.route('/blogs/<category>')
+def view_blogs(category):
+    if session.get('user_type') != 'Patient':
+        return redirect(url_for('login'))
+
+    with db.cursor() as cursor:
+        query = "SELECT * FROM blogs WHERE category = %s AND is_draft = 0"
+        cursor.execute(query, (category,))
+        blogs = cursor.fetchall()
+
+    # Truncate summaries to 15 words
+    for blog in blogs:
+        words = blog['summary'].split()
+        if len(words) > 15:
+            blog['summary'] = ' '.join(words[:15]) + '...'
+
+    return render_template('patient_blogs.html', category=category, blogs=blogs)
+
+
 
 def init_db():
     with sqlite3.connect(DATABASE) as conn:

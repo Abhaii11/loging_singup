@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Blogs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Your Blog Posts</h1>
+    <div class="blog-container">
+        {% for blog in blogs %}
+        <div class="blog-card">
+            <h2>{{ blog.title }}</h2>
+            {% if blog.image %}
+            <img src="{{ url_for('static', filename='uploads/' + blog.image) }}" 
+                 alt="{{ blog.title }}" 
+                 onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/default.png') }}';" 
+                 class="blog-image">
+            {% endif %}
+            <p class="category">Category: {{ blog.category }}</p>
+            <p class="status">Status: {{ 'Draft' if blog.is_draft else 'Published' }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+

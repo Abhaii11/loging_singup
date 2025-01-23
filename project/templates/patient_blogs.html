@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blogs - {{ category }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>{{ category }} Blogs</h1>
+    <ul>
+        {% for blog in blogs %}
+        <li>
+            <h2>{{ blog.title }}</h2>
+            {% if blog.image %}
+            <img src="{{ url_for('static', filename='uploads/' + blog.image) }}" alt="{{ blog.title }}" style="width: 200px;">
+            {% endif %}
+            <p>{{ blog.summary }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -182,3 +182,93 @@ ul li.error {
         margin: 10px 0;
     }
 }
+
+/* static/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Set a default text color */
+}
+
+h1 {
+    text-align: center;
+    color: #007BFF; /* Bright blue for the header */
+    margin-top: 20px;
+}
+
+.blog-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.blog-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+}
+
+.blog-card img {
+    width: 100%; /* Ensure the image fills the card */
+    height: auto;
+    object-fit: cover;
+}
+
+.blog-card h3 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    color: #333; /* Make sure text is visible */
+}
+
+.blog-card p {
+    font-size: 1rem;
+    margin: 5px 15px;
+    color: #666; /* Slightly lighter for descriptions */
+}
+
+.blog-card .category {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.blog-card .status {
+    font-size: 0.9rem;
+    color: #28a745; /* Green for "Published" */
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #007BFF;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.pagination a:hover {
+    background-color: #007BFF;
+    color: #ffffff;
+}

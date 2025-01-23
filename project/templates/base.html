@@ -1,34 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title if title else "User App" }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=1.0">
+    <title>{% block title %}Blog App{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <nav>
-        <div class="brand">User App</div>
-        <div>
-            <a href="/">Home</a>
-            <a href="/signup">Signup</a>
-            <a href="/login">Login</a>
-        </div>
-    </nav>
-    <div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <ul>
-            {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
+        <a href="/">Home</a>
+        {% if session.get('user_type') == 'Doctor' %}
+            <a href="/doctor/blog/create">Create Blog</a>
+            <a href="/doctor/blogs">My Blogs</a>
+        {% elif session.get('user_type') == 'Patient' %}
+            <a href="/blogs/Mental Health">Mental Health Blogs</a>
+            <a href="/blogs/Heart Disease">Heart Disease Blogs</a>
         {% endif %}
-        {% endwith %}
-    </div>
-    <div class="content">
+        <a href="/logout">Login</a>
+    </nav>
+    <main>
         {% block content %}{% endblock %}
-    </div>
+    </main>
 </body>
 </html>

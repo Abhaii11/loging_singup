@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Create Blog Post</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Title:</label>
+        <input type="text" name="title" required><br>
+
+        <label>Image:</label>
+        <input type="file" name="image"><br>
+
+        <label>Category:</label>
+        <select name="category" required>
+            <option value="Mental Health">Mental Health</option>
+            <option value="Heart Disease">Heart Disease</option>
+            <option value="Covid19">Covid19</option>
+            <option value="Immunization">Immunization</option>
+        </select><br>
+
+        <label>Summary:</label>
+        <textarea name="summary" rows="3" required></textarea><br>
+
+        <label>Content:</label>
+        <textarea name="content" rows="6" required></textarea><br>
+
+        <label>Mark as Draft:</label>
+        <input type="checkbox" name="is_draft"><br>
+
+        <button type="submit">Create Blog</button>
+    </form>
+</body>
+</html>
