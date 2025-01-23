@@ -21,7 +21,7 @@ DATABASE = 'users.db'
 db = pymysql.connect(
     host="localhost",
     user="root",
-    password="Root@Bhi89",
+    password="#########",
     database="blog_app",
     cursorclass=pymysql.cursors.DictCursor
 )
